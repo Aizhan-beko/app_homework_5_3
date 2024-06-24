@@ -4,11 +4,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.geeks.app_5_3.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         CartoonPagingAdapter()
     }
 
-    private val apiService = CartoonApiService.create()
+    private val apiService = RetrofitService.apiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchData() {
-        val pagingFlow: Flow<PagingData<Character>> = Pager(
+        val pagingFlow: Flow<PagingData<com.geeks.app_5_3.models.Result>> = Pager(
             config = PagingConfig(
                 pageSize = 20,
                 enablePlaceholders = false
@@ -43,11 +46,11 @@ class MainActivity : AppCompatActivity() {
             pagingSourceFactory = { CartoonPagingSource(apiService) }
         ).flow
 
-        val pagingLiveData: LiveData<PagingData<Character>> = pagingFlow.asLiveData()
-        pagingLiveData.observe(this) { pagingData ->
-            adapter.submitData(lifecycle, pagingData)
+        lifecycleScope.launch {
+            pagingFlow.collectLatest { pagingData ->
+                adapter.submitData(pagingData)
+            }
         }
     }
 }
-
 

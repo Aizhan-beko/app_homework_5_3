@@ -17,6 +17,4 @@
         tools:listitem="@layout/item_character"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-
-
 </LinearLayout>

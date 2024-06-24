@@ -10,9 +10,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.geeks.app_5_3.databinding.ItemCharacterBinding
 import com.geeks.app_5_3.models.Result
 
-
-class CartoonPagingAdapter :
-    PagingDataAdapter<com.geeks.app_5_3.models.Result, CartoonPagingAdapter.CharacterViewHolder>(CHARACTER_COMPARATOR) {
+class CartoonPagingAdapter : PagingDataAdapter<com.geeks.app_5_3.models.Result, CartoonPagingAdapter.CharacterViewHolder>(CHARACTER_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val binding = ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -25,8 +23,6 @@ class CartoonPagingAdapter :
             holder.bind(it)
         }
     }
-
-
 
     inner class CharacterViewHolder(private val binding: ItemCharacterBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -48,7 +44,7 @@ class CartoonPagingAdapter :
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: com.geeks.app_5_3.models.Result, newItem: Result): Boolean {
+            override fun areContentsTheSame(oldItem: com.geeks.app_5_3.models.Result, newItem: com.geeks.app_5_3.models.Result): Boolean {
                 return oldItem == newItem
             }
         }

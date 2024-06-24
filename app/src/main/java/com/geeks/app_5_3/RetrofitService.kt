@@ -6,8 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 object RetrofitService {
-    private val okHttpClient = OkHttpClient.Builder()
-        .build()
+    private val okHttpClient = OkHttpClient.Builder().build()
 
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://rickandmortyapi.com/api/")
@@ -17,6 +16,3 @@ object RetrofitService {
 
     val apiService: CartoonApiService = retrofit.create(CartoonApiService::class.java)
 }
-
-
-   
